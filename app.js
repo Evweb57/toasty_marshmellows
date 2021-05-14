@@ -21,8 +21,8 @@ const reviewRoutes = require('./routes/reviews');
 
 const MongoStore = require("connect-mongo");
 
-// const dbURL = process.env.DB_URL ||;
-const dbUrl = 'mongodb://localhost:27017/marshmellow-trail'
+
+const dbUrl = process.env.DB_URL ||'mongodb://localhost:27017/marshmellow-trail'
 
 mongoose.connect(dbUrl, {
     useNewUrlParser: true,
@@ -56,7 +56,7 @@ const store = MongoStore.create({
     mongoUrl: dbUrl,
     touchAfter: 24 * 60 * 60,
     crypto: {
-        secret: 'thisshouldbeabettersecret!'
+        secret
     }
 });
 
@@ -67,7 +67,7 @@ store.on("error", function (e) {
 const sessionConfig = {
     store,
     name: 'session',
-    secret: 'thisshouldbeabettersecret!',
+    secret,
     resave: false,
     saveUninitialized: true,
     cookie: {
